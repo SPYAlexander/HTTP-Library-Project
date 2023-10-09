@@ -1,0 +1,40 @@
+.page-area{
+    text-align: center;
+    width: 100%;
+}
+
+#content{
+    display: flex;
+}
+
+.panel{
+    background-color: lightgray;
+    margin: 10px;
+    padding: 10px;
+    border-color: black;
+    border-width: 2px;
+    border-radius: 2.5%;
+    flex: 50%;
+}
+
+#innerContainer{
+    display: flex;
+    flex: 100%;
+}
+
+.entryContainer{
+    background-color: white;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 1.25%;
+    flex: 50%;
+}
+
+#response{
+    background-color: white;
+    margin: 10px;
+    margin-top: 15;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 1.25%;
+}
