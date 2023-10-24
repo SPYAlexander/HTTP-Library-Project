@@ -1,6 +1,6 @@
 const http = new Library();
 
-function ShowResponse(responseData, isDeletion) { // straight from GitHub, works and doesn't need to be edited
+function ShowResponse(responseData, isDeletion) { 
     let html = "<ul style='list-style:none'>";
     if (Array.isArray(responseData)) {
         responseData.forEach(user => {
@@ -15,7 +15,7 @@ function ShowResponse(responseData, isDeletion) { // straight from GitHub, works
     document.querySelector("#response").innerHTML = html;
 }
 
-function ShowError(err) { // straight from GitHub, works and doesn't need to be edited
+function ShowError(err) { 
     html = `<p>${err}</p>`;
     document.querySelector("#response").innerHTML = html;
 }
@@ -24,14 +24,13 @@ function ShowError(err) { // straight from GitHub, works and doesn't need to be 
 
 async function sendRequest(reqType, targetURL, userData) {
     let data;
-    switch (reqType){ // uses the reqType to decipher which type of request is going to be made
+    switch (reqType){ 
         case "get":
-            // code for the fetch request, sends over to the Library Class
-            try { // this is for when everything is handled normally
+            try { 
                 let response = await http.Get(targetURL);
                 ShowResponse(await response, false);
             }
-            catch (exception){ // automatically called when an exception (error) is found / caught
+            catch (exception){ 
                 ShowError(exception);
             }
             break;
@@ -74,19 +73,18 @@ async function sendRequest(reqType, targetURL, userData) {
     }
 }
 
-// Add the listener to the SEND button
 document.querySelector("#SendReq").addEventListener("click", (e) => {
-    const radioButtons = document.querySelectorAll('input[name="HTTPtype"'); // collects data from radio buttons selections
-    const userData = document.querySelectorAll('input[class="UserData"'); // collects the user entered data for post and put fields
-    const route = document.querySelector("#route").value; // collects the url or path that will be used to make the request
+    const radioButtons = document.querySelectorAll('input[name="HTTPtype"'); 
+    const userData = document.querySelectorAll('input[class="UserData"'); 
+    const route = document.querySelector("#route").value; 
     let reqType;
-    for (const radioButton of radioButtons) { // searches through the array of radioButtons in order to find the type that is pressed, so that we know what request to make
+    for (const radioButton of radioButtons) { 
         if (radioButton.checked) {
         reqType = radioButton.value;
         break;
         }
     }
-    sendRequest(reqType,route, userData); // calls function to send request with data that has been parsed
+    sendRequest(reqType,route, userData); 
 
     e.preventDefault();
 });
