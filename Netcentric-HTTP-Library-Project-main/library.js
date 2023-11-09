@@ -1,72 +1,91 @@
 class Library {
 
+    // Constructor for the Library class
     constructor(){
     }
 
-    async Get(targetURL){ // Tested, Works
+    // Perform a GET request to the specified URL
+    async Get(targetURL){ 
         let response;
 
+        // Define the options for the GET request
         const requestOptions = {
             method: "GET",
             headers: {"content-type": "application/json"}
         };
         
-        response = await this.#processFetch (targetURL, requestOptions);
+        // Execute the GET request using the private method #processFetch
+        response = await this.#processFetch(targetURL, requestOptions);
         return await response;
     }
 
-    async Post(targetURL, data){ // Having issues with response being undefined
+    // Perform a POST request to the specified URL with data
+    async Post(targetURL, data){
         let response;
 
+        // Define the options for the POST request, including the data to send
         const requestOptions = {
             method: "POST",
             headers: {"content-type": "application/json"},
             body: JSON.stringify(data),
         };
-        response = await this.#processFetch (targetURL, requestOptions);
+        
+        // Execute the POST request using the private method #processFetch
+        response = await this.#processFetch(targetURL, requestOptions);
         return await response;
     }
 
-    async Put(targetURL, data){ // Having issues with response being undefined
+    // Perform a PUT request to the specified URL with data
+    async Put(targetURL, data){ 
         let response;
     
+        // Define the options for the PUT request, including the data to send
         const requestOptions = {
             method: "PUT",
             headers: {"content-type": "application/json"},
             body: JSON.stringify(data),
         };
-        response = await this.#processFetch (targetURL, requestOptions);
+        
+        // Execute the PUT request using the private method #processFetch
+        response = await this.#processFetch(targetURL, requestOptions);
         return await response;
     }
 
-    async Delete(targetURL) { // Somewhat Tested, Believed to Work
+    // Perform a DELETE request to the specified URL
+    async Delete(targetURL) {
         let response;
 
+        // First, execute a GET request to the same URL to capture the response before deletion
         const tmp = await this.Get(targetURL);
 
+        // Define the options for the DELETE request
         const requestOptions = {
             method: "DELETE",
             headers: {"content-type": "application/json"}
         };
+
         try {
-            response = await this.#processFetch (targetURL, requestOptions);
-            return await tmp;
+            // Execute the DELETE request using the private method #processFetch
+            response = await this.#processFetch(targetURL, requestOptions);
+            return await tmp; // Return the response captured by the GET request
         }
-        catch{
+        catch (error) {
+            // In case of an exception, return the response from the DELETE request
             return await response;
         }
-        return await response;
     }
 
-    async #processFetch (targetURL, requestOptions) { // processes the Fetch Request, used in separate function to clean up code, and add ability to await it
+    // Private method to process a fetch request
+    async #processFetch(targetURL, requestOptions) { 
 
-        try{ // tries to handle the fetch
+        try{ 
+            // Use the Fetch API to perform the HTTP request
             let data = await fetch(targetURL, requestOptions);
-            return data.json();
+            return data.json(); // Parse and return the JSON response
         }
-        catch (exception){ // called if there's an error, passes it back through the chain for output
+        catch (exception){ 
+            // Handle exceptions and throw an error with the details
             throw new Error(exception);
         }
-    }
-
+    }        
 }
